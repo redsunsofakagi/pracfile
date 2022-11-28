@@ -106,3 +106,7 @@ def p10(n):
             print("PRIME")
     else:
         print("NOT PRIME")
+
+p10(2)
+p10(3)
+p10(15)

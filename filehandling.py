@@ -39,14 +39,14 @@ def f14():
 
 
 def f15():
-    with open("poem.txt") as fin:
+    with open("Poem.txt") as fin:
         count_to=0
         count_the=0
         for i in fin.readlines():
             for j in i.split():
-                if j.lower=="to":
+                if j.lower()=='to':
                     count_to+=1
-                if j.lower=="the":
+                elif j.lower()=='the':
                     count_the+=1
     
     print("Number of occurences of 'to':",count_to)
@@ -71,7 +71,6 @@ def f16():
         for i,j in d.items():
             lmax.append((j,i))
         lmax.sort(reverse=True)
-        print(lmax)
         print("WAY 1- Top 2 most commonly used words are:", lmax[0][1], 'and', lmax[1][1])
         print()
 
@@ -82,11 +81,10 @@ def f16():
             all_values=list(d.values())
             print(all_keys[all_values.index(max(all_values))])
             del d[all_keys[all_values.index(max(all_values))]]
-
 def f17():
     with open("old.txt") as fin:
         new_lst=[]
-        data=fin.readlines
+        data=fin.readlines()
         for i in data:
             for j in i.split():
                 if j=="a":
@@ -95,7 +93,6 @@ def f17():
     
     with open("new.txt","w") as fout:
         fout.writelines(new_lst)
-
 
 def f18():
     rec_count=int(input("Enter number of records to be entered: "))
@@ -107,7 +104,6 @@ def f18():
         lst_out.append(rec)
     with open("books.dat","w") as fout:
         fout.writelines(lst_out)
-        
 
 def DISPLAYWORDS():
     with open("STORY.TXT") as fin:
@@ -116,30 +112,31 @@ def DISPLAYWORDS():
             for j in i.split():
                 if len(j)<4:
                     print(j)
-    
 
 def f20():
     with open("file.txt","r") as fin:
-        run=True
-        while run:
-            choice=input("Enter 'c' to continue or 'end' to stop: ")
-            if choice=="c":
-                char=fin.read(1)
-                print(char)
-                if char.isupper()==True:
-                    with open("UPPER.TXT","a") as fout:
-                        fout.write(char)
-                elif char.islower()==True:
-                    with open("LOWER.TXT","a") as fout:
-                        fout.write(char)
+        try:
+            run=True
+            while run:
+                choice=input("Enter 'c' to continue or 'end' to stop: ")
+                if choice=="c":
+                    char=fin.read(1)
+                    print(char)
+                    if char.isupper()==True:
+                        with open("UPPER.TXT","a") as fout:
+                            fout.write(char)
+                    elif char.islower()==True:
+                        with open("LOWER.TXT","a") as fout:
+                            fout.write(char)
+                    else:
+                        with open("OTHERS.TXT","a") as fout:
+                            fout.write(char)
+                elif choice=="end":
+                    run=False
                 else:
-                    with open("OTHERS.TXT","a") as fout:
-                        fout.write(char)
-            elif choice=="end":
-                run=False
-            else:
-                print("Enter a valid choice")
-        
+                    print("Enter a valid choice")
+        except EOFError:
+            print("Reached end of the file.")
 
 def f21(file1,file2):
     with open(file1) as fin:
@@ -153,7 +150,6 @@ def f21(file1,file2):
     with open(file2,"w") as fout:
         fout.write(new_data)
 
-
 def f22():
     with open("file1.txt","r") as fin:
         data=fin.readlines()
@@ -163,20 +159,18 @@ def f22():
                 fout.write(str(count)+i+"\n")
             count+=1
 
-
 def f23(filename):
     with open(filename,"r") as fin:
         str1=fin.read()
-        print("Size of file is "+str(len(str1)+" bytes."))
+        print("Size of file is " + str(len(str1)) + " bytes.")
         fin.seek(0)
         lst=fin.readlines()
         print("Number of lines is "+str(len(lst)))
         word_count=0
         for i in lst:
-            for j in len(i.split()):
+            for j in range(len(i.split())):
                 word_count+=1
-        print("Number of words is "+ str(word_count))
-        
+        print("Number of words is "+ str(word_count))    
 
 def f24():
     with open("students.dat","ab") as fout:
@@ -207,7 +201,6 @@ def f24():
             except EOFError:
                 print("No matching record was found :(")
                 run=False
-
 def f25():
         with open("students_info.dat","ab") as fout:
             while True:
@@ -223,11 +216,11 @@ def f25():
                     break
                 else:
                     print("Enter a valid choice")
-        with open("students_info.dat","rb") as fout:
+        with open("students_info.dat","rb+") as fout:
             run=True
+            rno=int(input("Enter roll no to change marks for: "))
+            marks_new=int(input("Enter new marks: "))
             while run:
-                rno=int(input("Enter roll no to change marks for: "))
-                marks_new=int(input("Enter new marks: "))
                 try:
                     pos=fout.tell()
                     rec=pickle.load(fout)
@@ -239,8 +232,6 @@ def f25():
                 except EOFError:
                     print("Record with given roll number not found!")
                     run=False
-
-
 
 
 def f26():
@@ -268,6 +259,7 @@ def f26():
 
                     
         elif option.lower()=="c":
+            found=False
             phnum=input("Enter number: ")
             with open("phonebook.dat","rb") as fin:
                 while True:
@@ -275,12 +267,14 @@ def f26():
                         data=pickle.load(fin)
                         for i in data:
                             if data[i]==phnum:
-                                print("Record found\n"+data)
+                                print("Record found:",data)
+                                found=True
                     except EOFError:
-                        print("Record not found")
                         break
-
+            if not found:
+                print("Record not found")
         elif option.lower()=="d":
+            found=False
             name=input("Enter Name: ")
             with open("phonebook.dat","rb") as fin:
                 while True:
@@ -288,14 +282,15 @@ def f26():
                         data=pickle.load(fin)
                         for i in data:
                             if i==name:
-                                print("Record found\n"+data)
+                                print("Record found",data)
+                                found=True
                     except EOFError:
-                        print("Record not found")
                         break
-
-
+            if not found:
+                print('Record not found')
 
         elif option.lower()=="e":
+            found=False
             name=input("Enter name: ")
             with open("phonebook.dat","rb+") as fout:
                 while True:
@@ -307,15 +302,35 @@ def f26():
                                 data[i]=input("Enter a new number: ")
                                 fout.seek(pos)
                                 pickle.dump(data,fout)
+                                found=True
                     except EOFError:
-                        print("Record not found")
                         break
+            if not found:
+                print("Record not found")
+
+        elif option.lower()=="f":
+            found=False
+            name=input("Enter name: ")
+            with open("phonebook.dat","rb+") as fout:
+                while True:
+                    try:
+                        pos=fout.tell()
+                        data=pickle.load(fout)
+                        if name in data:
+                            data={}
+                            found=True
+                            print("Record found")
+                            pickle.dump(data,fout)
+                    except EOFError:
+                        break
+            if not found:
+                print("Record not found")
 
         else:
             print("Enter a valid option.")
 
 
-
+f26()
 
 def f27():
     with open("27.dat","wb") as fout:
