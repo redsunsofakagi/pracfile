@@ -53,8 +53,35 @@ def f15():
     print("Number of occurences of 'the':",count_the)
 
 def f16():
-    pass
+    with open("emails.txt") as fin:
+        count=0
+        d={}
+        data=fin.read()
+        l1=data.split()
+        counted=[]
+        for i in l1:
+            if i not in counted:
+                d[i]=l1.count(i)
+                counted.append(i)
+            else:
+                continue
+        #WAY 1:
+        #lmax=list(d.items()) #------->WILL NOT WORK. THIS SORTS IT IN REVERSE ALPHABETICAL ORDER AND NOT BY NO. OF OCCURENCES. THIS METHOD HINTED IN THE QUESTION IS INCORRECT.
+        lmax=[]
+        for i,j in d.items():
+            lmax.append((j,i))
+        lmax.sort(reverse=True)
+        print(lmax)
+        print("WAY 1- Top 2 most commonly used words are:", lmax[0][1], 'and', lmax[1][1])
+        print()
 
+        #WAY 2:
+        print("WAY 2- Top 2 most commonly used words are:")
+        for i in range(2):
+            all_keys=list(d.keys())
+            all_values=list(d.values())
+            print(all_keys[all_values.index(max(all_values))])
+            del d[all_keys[all_values.index(max(all_values))]]
 
 def f17():
     with open("old.txt") as fin:
@@ -114,8 +141,17 @@ def f20():
                 print("Enter a valid choice")
         
 
-def f21():
-    pass
+def f21(file1,file2):
+    with open(file1) as fin:
+        data=fin.read()
+        lst=data.split("  ")
+        new_data=""
+        for i in lst:
+            new_data+=i
+            new_data+=" "
+        new_data=new_data.rstrip(new_data[-1])
+    with open(file2,"w") as fout:
+        fout.write(new_data)
 
 
 def f22():
