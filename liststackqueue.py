@@ -31,6 +31,9 @@ def p34():
             l1.append(sum(i))
         return sum(l1)
 
+    print(maxrunover(Runs))
+    print(minrunover(Runs))
+    print(total(Runs))
 
 def p35():
 
@@ -38,7 +41,9 @@ def p35():
         for i in CITIES:
             if i[0] in ['a','A']:
                 print(i)
+    AFIND(['Delhi','Ajmer','Kolkata'])
 
+p35()
 def p36(): #For some reason, running this using p36() results in errors. Run in a seperate file.
     import sys
     top=None
@@ -109,19 +114,21 @@ def p36(): #For some reason, running this using p36() results in errors. Run in 
             print("Invalid option. Aborting.")
             sys.exit()
 
-def p37():
+def p37(): #run as seperate file
+    import sys
     pkg_desc=[]
     top = None
-    
+
     def MakePush(Package):
-        top=0
+        global top
+        
         pkg_desc.append(Package)
         if top==None:
             top=0
         else:
             top=top+1
         
-    def MakePop(Package):
+    def MakePop():
         global top
         
         if pkg_desc==[]:
@@ -133,6 +140,12 @@ def p37():
                 top=None
             else:
                 top=top-1
+
+    MakePush('pkg1')
+    MakePush('pkg2')
+    MakePop()
+    MakePop()
+    MakePop()
 
 def p38(): #run as seperate file
     import sys
@@ -169,7 +182,7 @@ def p38(): #run as seperate file
     #for i in range(len(str1)):
         #POP()
                 
-def p39():
+def p39(): #run as seperate file
     import sys
     top=None
     stk=[]
