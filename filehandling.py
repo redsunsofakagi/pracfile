@@ -310,31 +310,34 @@ def f26():
 
         elif option.lower()=="f":
             found=False
+            l1=[]
             name=input("Enter name: ")
-            with open("phonebook.dat","rb+") as fout:
+            with open("phonebook.dat","rb") as fin:
                 while True:
                     try:
-                        pos=fout.tell()
-                        data=pickle.load(fout)
-                        if name in data:
-                            data={}
-                            found=True
-                            print("Record found")
-                            pickle.dump(data,fout)
+                        data=pickle.load(fin)
+                        l1.append(data)
                     except EOFError:
                         break
+            for i in l1:
+                if name in i:
+                    found = True
+                    print('Record found')
+                    l1.remove(i)
+            with open("phonebook.dat","wb") as fout:
+                for i in l1:
+                    pickle.dump(i,fout)
+            
             if not found:
-                print("Record not found")
-
+                print("Record not found")   
         else:
             print("Enter a valid option.")
 
 
-f26()
 
 def f27():
     with open("27.dat","wb") as fout:
-        str1="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        str1="Supercaliflageristicexpialladocious. \nCrazy, right?"
         pickle.dump(str1,fout)
 
     with open("27.dat","rb") as fin:
@@ -345,35 +348,67 @@ def f27():
                 break
             else:
                 new_str+=i
-        print(i)
-
+        print(new_str)
 
 def f28():
+    '''import sys
+    with open("CINEMA.DAT","wb") as fout:
+        ans='y'
+        MULTIPLEX={}
+        while ans=='y':
+                mno=int(input("Enter MNO: "))
+                mname=input("Enter MNAME: ")
+                mtype=input("ENTER MTYPE: ")
+                MULTIPLEX['MNO']=mno
+                MULTIPLEX['MNAME']=mname
+                MULTIPLEX['MTYPE']=mtype
+                pickle.dump(MULTIPLEX, fout)
+                ans=input("COntinue adding records? (y/n): ")
+                if ans == 'n':
+                    break
+                elif ans not in ['y','n']:
+                    print("Invalid input. Aborting.")
+                    sys.exit()'''
     with open("CINEMA.DAT","rb") as fin:
         while True:
             try:
                 data=pickle.load(fin)
-                if data["MYTYPE"]=="Comedy":
+                if data["MTYPE"]=="Comedy":
                     print(data)
             except EOFError:
                 break
-
 def f29():
+    '''
+    import sys
+    with open("emp1.dat","wb") as fout:
+        ans='y'
+        Emp={}
+        while ans=='y':
+                no=int(input("Enter empno: "))
+                salary=int(input("Enter salary: "))
+                Emp['empno']=no
+                Emp['Salary']=salary
+                pickle.dump(Emp, fout)
+                ans=input("Continue adding records? (y/n): ")
+                if ans == 'n':
+                    break
+                elif ans not in ['y','n']:
+                    print("Invalid input. Aborting.")
+                    sys.exit()'''
     with open("emp1.dat","rb+") as fout:
         while True:
             try:
                 pos=fout.tell()
                 data=pickle.load(fout)
                 if data['empno']==1251:
-                    data['salary']+=2000
+                    data['Salary']+=2000
                 fout.seek(pos)
                 pickle.dump(data,fout)
             except EOFError:
                 break
 
-
 def f30():
-    with open("Items.csv","w") as fout:
+    with open("Items.csv","w", newline='') as fout:
         wr=csv.writer(fout)
         lst_out=[]
         for i in range(5):
@@ -396,23 +431,20 @@ def f31():
                 search=True
         if search==False:
             print("Item not found")
-
-
 def f32():
     with open("Items.csv","r") as fin:
         re=csv.reader(fin)
         lst_out=[]
         for i in re:
             if int(i[2])>250:
-                lst_out.append[i]
+                lst_out.append(i)
     
-    with open("highitems.csv","w") as fout:
+    with open("highitems.csv","w", newline='') as fout:
         wr=csv.writer(fout)
         wr.writerows(lst_out)
 
-
 def f33():
-    with open("Items.csv","w") as fout:
+    with open("Items.csv","w", newline='') as fout:
         wr=csv.writer(fout,delimiter="|")
         lst_out=[]
         for i in range(5):
@@ -422,7 +454,5 @@ def f33():
             category=input("Enter category: ")
             rec=[itemno,name,price,category]
             lst_out.append(rec)
-        wr.writerows(lst_out)
-
-            
+        wr.writerows(lst_out)            
             
